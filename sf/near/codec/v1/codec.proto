@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package dfuse.ethereum.codec.v1;
+package sf.near.codec.v1;
 
 option go_package = "github.com/streamingfast/near-sf/pb/sf/near/codec/v1;pbcodec";
 
