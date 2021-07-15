@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package dfuse.ethereum.codec.v1;
+
+option go_package = "github.com/streamingfast/near-sf/pb/sf/near/codec/v1;pbcodec";
+
+import "google/protobuf/timestamp.proto";
+
+message Block {
+  int32 ver = 1;
+  bytes hash = 2;
+  uint64 number = 3;
+  uint64 size = 4;
+  repeated TransactionTrace transaction_traces = 10;
+}
+
+// BlockWithRefs is a lightweight block, with traces and transactions
+message BigInt {
+  bytes bytes = 1;
+}
+
+message TransactionTrace {
+  // consensus
+  bytes receiver = 1;
+  bytes hash = 21;
+}
+
