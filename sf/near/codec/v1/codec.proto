@@ -53,7 +53,7 @@ message StateChangeValue {
     DataUpdate data_update = 5;
     DataDeletion data_deletion = 6;
     ContractCodeUpdate contract_code_update = 7;
-    ContractCodeDeletion contract_deletion =
+    ContractCodeDeletion contract_deletion = 8;
   }
 }
 
