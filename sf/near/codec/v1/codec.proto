@@ -145,6 +145,7 @@ enum SignatureType {
   ED25519 = 0;
   SECP256K1 = 1;
 }
+
 message Signature {
   SignatureType type = 1;
   bytes bytes = 2;
