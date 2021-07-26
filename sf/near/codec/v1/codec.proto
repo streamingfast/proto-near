@@ -61,12 +61,12 @@ message AccountUpdate {string account_id = 1; Account account = 2;}
 message AccountDeletion {string account_id = 1;}
 message AccessKeyUpdate {
   string account_id = 1;
-  PublicKey public_key =2;
-  AccessKey access_key =3;
+  PublicKey public_key = 2;
+  AccessKey access_key = 3;
 }
 message AccessKeyDeletion {
   string account_id = 1;
-  PublicKey public_key =2;
+  PublicKey public_key = 2;
 }
 message DataUpdate {
   string account_id = 1;
@@ -141,8 +141,13 @@ message CryptoHash {
   bytes bytes = 1;
 }
 
+enum SignatureType {
+  ED25519 = 0;
+  SECP256K1 = 1;
+}
 message Signature {
-  bytes bytes = 1;
+  SignatureType type = 1;
+  bytes bytes = 2;
 }
 message PublicKey {
   bytes bytes = 1;
