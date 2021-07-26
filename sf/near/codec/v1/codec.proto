@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package sf.near.codec.v1;
+package sf_near_v1;
 
 option go_package = "github.com/streamingfast/near-sf/pb/sf/near/codec/v1;pbcodec";
 
@@ -102,7 +102,7 @@ message Block {
 
 message BlockHeader {
   uint64 height = 1;
-  optional uint64 prev_height = 2;
+  uint64 prev_height = 2;
   CryptoHash epoch_id = 3;
   CryptoHash next_epoch_id = 4;
   CryptoHash hash = 5;
@@ -120,7 +120,7 @@ message BlockHeader {
   repeated ValidatorStake validator_proposals = 17;
   repeated bool chunk_mask = 18;
   BigInt gas_price = 19;
-  optional uint64 block_ordinal = 20;
+  uint64 block_ordinal = 20;
   BigInt validator_reward = 21;
   BigInt total_supply = 22;
   repeated SlashedValidator challenges_result = 23;
@@ -128,7 +128,7 @@ message BlockHeader {
   CryptoHash last_ds_final_block = 25;
   CryptoHash next_bp_hash = 26;
   CryptoHash block_merkle_root = 27;
-  optional bytes epoch_sync_data_hash = 28;
+  bytes epoch_sync_data_hash = 28;
   repeated Signature approvals = 29;
   Signature signature = 30;
   uint32 latest_protocol_version = 31;
@@ -182,7 +182,7 @@ message ChunkHeader {
 
 message IndexerShard {
   uint64 shard_id = 1;
-  optional IndexerChunk chunk = 2;
+  IndexerChunk chunk = 2;
   repeated IndexerExecutionOutcomeWithReceipt receipt_execution_outcomes = 3;
 
 }
@@ -237,7 +237,7 @@ message ReceiptEnum {
 
 message ReceiptData {
   CryptoHash data_id = 1;
-  optional bytes data = 2;
+  bytes data = 2;
 }
 
 message ReceiptAction {
@@ -298,7 +298,7 @@ message TxExecutionError {
 }
 
 message ActionError {
-  optional uint64 index = 1;
+  uint64 index = 1;
   ActionErrorKind kind = 2;
 }
 
@@ -485,7 +485,7 @@ message AccessKeyPermission {
 }
 
 message FunctionCallPermission {
-  optional BigInt allowance = 1;
+  BigInt allowance = 1;
   string receiver_id = 2;
   repeated  string method_names = 3;
 }
