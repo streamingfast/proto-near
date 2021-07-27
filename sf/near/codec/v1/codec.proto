@@ -273,16 +273,16 @@ message ExecutionOutcome {
   uint64 gas_burnt = 3;
   BigInt tokens_burnt = 4;
   string executor_id = 5;
-  ExecutionStatus status = 6;
+  oneof status {
+    UnknownExecutionStatus unknown = 20;
+    FailureExecutionStatus failure = 21;
+    SuccessValueExecutionStatus success_value = 22;
+    SuccessReceiptIdExecutionStatus success_receipt_id = 23;
+  }
 }
 
 message ExecutionStatus {
-  oneof status {
-    UnknownExecutionStatus unknown = 1;
-    FailureExecutionStatus failure = 2;
-    SuccessValueExecutionStatus success_value = 3;
-    SuccessReceiptIdExecutionStatus success_receipt_id = 4;
-  }
+
 }
 
 message SuccessValueExecutionStatus {
