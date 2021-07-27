@@ -439,7 +439,7 @@ message Action {
     StakeAction stake = 5;
     AddKeyAction add_key = 6;
     DeleteKeyAction delete_key = 7;
-    DeleteAccountAction delete_action = 8;
+    DeleteAccountAction delete_account = 8;
   }
 }
 
