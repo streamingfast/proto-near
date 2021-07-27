@@ -328,7 +328,6 @@ message AccountDoesNotExistErrorKind {
 message CreateAccountOnlyByRegistrarErrorKind{
   string account_id = 1;
   string  registrar_account_id = 2;
-  string  predecessor_id = 3;
 }
 
 message CreateAccountNotAllowedErrorKind{
