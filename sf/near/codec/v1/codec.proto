@@ -230,16 +230,14 @@ message Receipt {
   string predecessor_id = 1;
   string receiver_id = 2;
   CryptoHash receipt_id = 3;
-  ReceiptEnum receipt = 4;
-}
-
-message ReceiptEnum {
 
   oneof receipt {
-    ReceiptAction action = 1;
-    ReceiptData data = 2;
+    ReceiptAction action = 10;
+    ReceiptData data = 11;
   }
+
 }
+
 
 message ReceiptData {
   CryptoHash data_id = 1;
