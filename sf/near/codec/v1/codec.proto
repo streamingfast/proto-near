@@ -289,10 +289,11 @@ message SuccessReceiptIdExecutionStatus {
 }
 message UnknownExecutionStatus {}
 message FailureExecutionStatus {
-  oneof error {
+  oneof failure {
     ActionError action_error = 1;
     InvalidTxError invalid_tx_error = 2;
-  }}
+  }
+}
 
 
 message ActionError {
@@ -304,7 +305,7 @@ message ActionError {
     CreateAccountNotAllowedErrorKind create_account_not_allowed = 24;
     ActorNoPermissionErrorKind actor_no_permission =25;
     DeleteKeyDoesNotExistErrorKind  delete_key_does_not_exist = 26;
-    AddKeyAlreadyExistsErrorKind  add_key_does_not_exists = 27;
+    AddKeyAlreadyExistsErrorKind  add_key_already_exists = 27;
     DeleteAccountStakingErrorKind delete_account_staking = 28;
     LackBalanceForStateErrorKind lack_balance_for_state = 29;
     TriesToUnstakeErrorKind tries_to_unstake = 30;
