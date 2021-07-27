@@ -212,13 +212,17 @@ message IndexerTransactionWithOutcome {
 }
 
 message SignedTransaction {
+  Transaction transaction = 1;
+  Signature signature = 2;
+  CryptoHash hash = 4;
+  uint64 size = 5;
+}
+message Transaction {
   string signer_id = 1;
   PublicKey public_key = 2;
   uint64 nonce = 3;
   string receiver_id = 4;
   repeated Action actions = 5;
-  Signature signature = 6;
-  CryptoHash hash = 7;
 }
 
 message IndexerExecutionOutcomeWithOptionalReceipt {
