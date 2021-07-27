@@ -281,10 +281,6 @@ message ExecutionOutcome {
   }
 }
 
-message ExecutionStatus {
-
-}
-
 message SuccessValueExecutionStatus {
   string value = 1;
 }
