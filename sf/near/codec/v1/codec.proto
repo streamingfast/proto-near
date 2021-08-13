@@ -1,10 +1,8 @@
 syntax = "proto3";
 
-package sf_near_v1;
+package sf.near.codec.v1;
 
-option go_package = "github.com/streamingfast/near-sf/pb/sf/near/codec/v1;pbcodec";
-
-import "google/protobuf/timestamp.proto";
+option go_package = "github.com/streamingfast/sf-near/pb/sf/near/codec/v1;pbcodec";
 
 message BlockWrapper {
   Block block = 1;
