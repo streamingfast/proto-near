@@ -4,17 +4,18 @@ package sf.near.codec.v1;
 
 option go_package = "github.com/streamingfast/sf-near/pb/sf/near/codec/v1;pbcodec";
 
-message BlockWrapper {
-  Block block = 1;
-  repeated IndexerShard shards = 2;
-  repeated StateChangeWithCause state_changes = 3;
+message Block {
+  string author = 1;
+  BlockHeader header = 2;
+  repeated ChunkHeader chunk_headers = 3;
+  repeated IndexerShard shards = 4;
+  repeated StateChangeWithCause state_changes = 5;
 }
 
 message StateChangeWithCause {
-  StateChangeCause cause = 1;
-  StateChangeValue value = 2;
+  StateChangeValue value = 1;
+  StateChangeCause cause = 2;
 }
-
 
 message StateChangeCause {
   oneof cause {
@@ -29,18 +30,19 @@ message StateChangeCause {
     ValidatorAccountsUpdate validator_accounts_update = 9;
     Migration migration = 10;
   }
+
+  message NotWritableToDisk {}
+  message InitialState {}
+  message TransactionProcessing {CryptoHash tx_hash = 1;}
+  message ActionReceiptProcessingStarted {CryptoHash receipt_hash = 1;}
+  message ActionReceiptGasReward {CryptoHash tx_hash = 1;}
+  message ReceiptProcessing {CryptoHash tx_hash = 1;}
+  message PostponedReceipt {CryptoHash tx_hash = 1;}
+  message UpdatedDelayedReceipts {}
+  message ValidatorAccountsUpdate {}
+  message Migration {}
 }
 
-message NotWritableToDisk {}
-message InitialState {}
-message TransactionProcessing {CryptoHash tx_hash = 1;}
-message ActionReceiptProcessingStarted {CryptoHash receipt_hash = 1;}
-message ActionReceiptGasReward {CryptoHash tx_hash = 1;}
-message ReceiptProcessing {CryptoHash tx_hash = 1;}
-message PostponedReceipt {CryptoHash tx_hash = 1;}
-message UpdatedDelayedReceipts {}
-message ValidatorAccountsUpdate {}
-message Migration {}
 
 message StateChangeValue {
   oneof value {
@@ -53,35 +55,37 @@ message StateChangeValue {
     ContractCodeUpdate contract_code_update = 7;
     ContractCodeDeletion contract_deletion = 8;
   }
+
+  message AccountUpdate {string account_id = 1; Account account = 2;}
+  message AccountDeletion {string account_id = 1;}
+  message AccessKeyUpdate {
+    string account_id = 1;
+    PublicKey public_key = 2;
+    AccessKey access_key = 3;
+  }
+  message AccessKeyDeletion {
+    string account_id = 1;
+    PublicKey public_key = 2;
+  }
+  message DataUpdate {
+    string account_id = 1;
+    bytes key = 2;
+    bytes value = 3;
+  }
+  message DataDeletion {
+    string account_id = 1;
+    bytes key = 2;
+  }
+  message ContractCodeUpdate {
+    string account_id = 1;
+    bytes code = 2;
+  }
+  message ContractCodeDeletion {
+    string account_id = 1;
+  }
+
 }
 
-message AccountUpdate {string account_id = 1; Account account = 2;}
-message AccountDeletion {string account_id = 1;}
-message AccessKeyUpdate {
-  string account_id = 1;
-  PublicKey public_key = 2;
-  AccessKey access_key = 3;
-}
-message AccessKeyDeletion {
-  string account_id = 1;
-  PublicKey public_key = 2;
-}
-message DataUpdate {
-  string account_id = 1;
-  bytes key = 2;
-  bytes value = 3;
-}
-message DataDeletion {
-  string account_id = 1;
-  bytes key = 2;
-}
-message ContractCodeUpdate {
-  string account_id = 1;
-  bytes code = 2;
-}
-message ContractCodeDeletion {
-  string account_id = 1;
-}
 
 
 
@@ -90,12 +94,6 @@ message Account {
   BigInt locked = 2;
   CryptoHash code_hash = 3;
   uint64 storage_usage = 4;
-}
-
-message Block {
-  string author = 1;
-  BlockHeader header = 2;
-  repeated ChunkHeader chunks = 3;
 }
 
 message BlockHeader {
