@@ -117,17 +117,18 @@ message BlockHeader {
   repeated bool chunk_mask = 18;
   BigInt gas_price = 19;
   uint64 block_ordinal = 20;
-  BigInt validator_reward = 21;
-  BigInt total_supply = 22;
-  repeated SlashedValidator challenges_result = 23;
-  CryptoHash last_final_block = 24;
-  CryptoHash last_ds_final_block = 25;
-  CryptoHash next_bp_hash = 26;
-  CryptoHash block_merkle_root = 27;
-  bytes epoch_sync_data_hash = 28;
-  repeated Signature approvals = 29;
-  Signature signature = 30;
-  uint32 latest_protocol_version = 31;
+  BigInt rent_paid = 21;
+  BigInt validator_reward = 22;
+  BigInt total_supply = 23;
+  repeated SlashedValidator challenges_result = 24;
+  CryptoHash last_final_block = 25;
+  CryptoHash last_ds_final_block = 26;
+  CryptoHash next_bp_hash = 27;
+  CryptoHash block_merkle_root = 28;
+  bytes epoch_sync_data_hash = 29;
+  repeated Signature approvals = 30;
+  Signature signature = 31;
+  uint32 latest_protocol_version = 32;
 }
 
 message BigInt {
