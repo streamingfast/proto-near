@@ -233,9 +233,7 @@ message Receipt {
     ReceiptAction action = 10;
     ReceiptData data = 11;
   }
-
 }
-
 
 message ReceiptData {
   CryptoHash data_id = 1;
@@ -280,9 +278,11 @@ message ExecutionOutcome {
 message SuccessValueExecutionStatus {
   string value = 1;
 }
+
 message SuccessReceiptIdExecutionStatus {
   CryptoHash id = 1;
 }
+
 message UnknownExecutionStatus {}
 message FailureExecutionStatus {
   oneof failure {
@@ -290,7 +290,6 @@ message FailureExecutionStatus {
     InvalidTxError invalid_tx_error = 2;
   }
 }
-
 
 message ActionError {
   uint64 index = 1;
@@ -317,9 +316,11 @@ message ActionError {
 message AccountAlreadyExistsErrorKind {
   string account_id = 1;
 }
+
 message AccountDoesNotExistErrorKind {
   string account_id = 1;
 }
+
 /// A top-level account ID can only be created by registrar.
 message CreateAccountOnlyByRegistrarErrorKind{
   string account_id = 1;
