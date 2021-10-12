@@ -121,14 +121,15 @@ message BlockHeader {
   BigInt validator_reward = 22;
   BigInt total_supply = 23;
   repeated SlashedValidator challenges_result = 24;
-  CryptoHash last_final_block = 25;
-  CryptoHash last_ds_final_block = 26;
-  CryptoHash next_bp_hash = 27;
-  CryptoHash block_merkle_root = 28;
-  bytes epoch_sync_data_hash = 29;
-  repeated Signature approvals = 30;
-  Signature signature = 31;
-  uint32 latest_protocol_version = 32;
+  uint64 last_final_block_height = 25;
+  CryptoHash last_final_block = 26;
+  CryptoHash last_ds_final_block = 27;
+  CryptoHash next_bp_hash = 28;
+  CryptoHash block_merkle_root = 29;
+  bytes epoch_sync_data_hash = 30;
+  repeated Signature approvals = 31;
+  Signature signature = 32;
+  uint32 latest_protocol_version = 33;
 }
 
 message BigInt {
