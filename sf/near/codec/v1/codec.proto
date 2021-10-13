@@ -277,7 +277,7 @@ message ExecutionOutcome {
 }
 
 message SuccessValueExecutionStatus {
-  string value = 1;
+  bytes value = 1;
 }
 
 message SuccessReceiptIdExecutionStatus {
@@ -434,12 +434,12 @@ message CreateAccountAction {
 }
 
 message DeployContractAction {
-  string code = 1;
+  bytes code = 1;
 }
 
 message FunctionCallAction {
   string method_name = 1;
-  string args = 2;
+  bytes args = 2;
   uint64 gas = 3;
   BigInt deposit = 4;
 }
