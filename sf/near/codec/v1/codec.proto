@@ -86,9 +86,6 @@ message StateChangeValue {
 
 }
 
-
-
-
 message Account {
   BigInt amount = 1;
   BigInt locked = 2;
@@ -138,17 +135,19 @@ message CryptoHash {
   bytes bytes = 1;
 }
 
-enum SignatureType {
+enum CurveKind {
   ED25519 = 0;
   SECP256K1 = 1;
 }
 
 message Signature {
-  SignatureType type = 1;
+  CurveKind type = 1;
   bytes bytes = 2;
 }
+
 message PublicKey {
-  bytes bytes = 1;
+  CurveKind type = 1;
+  bytes bytes = 2;
 }
 
 message ValidatorStake {
@@ -180,14 +179,12 @@ message ChunkHeader {
   bytes tx_root = 15;
   repeated ValidatorStake validator_proposals = 16;
   Signature signature = 17;
-
 }
 
 message IndexerShard {
   uint64 shard_id = 1;
   IndexerChunk chunk = 2;
   repeated IndexerExecutionOutcomeWithReceipt receipt_execution_outcomes = 3;
-
 }
 
 message IndexerExecutionOutcomeWithReceipt {
@@ -200,7 +197,6 @@ message IndexerChunk {
   ChunkHeader header = 2;
   repeated IndexerTransactionWithOutcome transactions = 3;
   repeated Receipt receipts = 4;
-
 }
 
 message IndexerTransactionWithOutcome {
@@ -372,16 +368,18 @@ message InsufficientStakeErrorKind{
   BigInt stake = 2;
   BigInt minimum_stake = 3;
 }
+
 message FunctionCallErrorKind{} //todo: incomplete
+
 message NewReceiptValidationErrorKind{} //todo: incomplete
 
 message OnlyImplicitAccountCreationAllowedErrorKind{
   string account_id = 1;
 }
+
 message DeleteAccountWithLargeStateErrorKind{
   string account_id = 1;
 }
-
 
 enum InvalidTxError {//todo: half baked
   InvalidAccessKeyError = 0;
@@ -400,10 +398,10 @@ enum InvalidTxError {//todo: half baked
   TransactionSizeExceeded = 13;
 }
 
-
 message MerklePath {
   repeated MerklePathItem path = 1;
 }
+
 message MerklePathItem {
   CryptoHash hash = 1;
   Direction direction = 2;
@@ -413,7 +411,6 @@ enum Direction {
   left = 0;
   right = 1;
 }
-
 
 message Action {
   oneof action {
