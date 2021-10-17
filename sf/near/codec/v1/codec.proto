@@ -322,13 +322,13 @@ message AccountDoesNotExistErrorKind {
 /// A top-level account ID can only be created by registrar.
 message CreateAccountOnlyByRegistrarErrorKind{
   string account_id = 1;
-  string  registrar_account_id = 2;
+  string registrar_account_id = 2;
   string predecessor_id = 3;
 }
 
 message CreateAccountNotAllowedErrorKind{
   string account_id = 1;
-  string  predecessor_id = 2;
+  string predecessor_id = 2;
 }
 
 message ActorNoPermissionErrorKind{
@@ -372,7 +372,90 @@ message InsufficientStakeErrorKind{
   BigInt minimum_stake = 3;
 }
 
-message FunctionCallErrorKind{} //todo: incomplete
+message FunctionCallErrorKind{
+  oneof function_call_error_ser {
+
+  }
+} //todo: incomplete
+
+////////////////
+
+message CompilationError {
+  oneof kind {
+    CodeDoesNotExistErrorCompilationErrorKind code_does_not_exist = 1;
+    PrepareErrorCompilationErrorKind prepare_error = 2;
+    WasmerCompileErrorCompilationErrorKind wasmer_compile_error = 3;
+    UnsupportedCompilerCompilationErrorKind unsupported_compiler = 4;
+  }
+}
+
+message CodeDoesNotExistErrorCompilationErrorKind {
+  string account_id = 1;
+}
+
+message PrepareErrorCompilationErrorKind {
+  PrepareError prepare_error = 1;
+}
+
+message WasmerCompileErrorCompilationErrorKind {
+  string msg = 1;
+}
+
+message UnsupportedCompilerCompilationErrorKind {
+  string msg = 1;
+}
+
+enum PrepareError {
+  Serialization = 0;
+  Deserialization = 1;
+  InternalMemeoryDeclared = 2;
+  GasInstrumentation = 3;
+  StackHeightInstrumentation = 4;
+  Instantiate = 5;
+  Memory = 6;
+}
+
+enum MethodResolveError {
+  MethodEmptyName = 0;
+  MethodNotFound = 1;
+  MethodInvalidSignature = 2;
+}
+
+enum WasmTrap {
+  Unreachable = 0;
+  IncorrectCallIndirectSignature = 1;
+  MemoryOutOfBounds = 2;
+  CallIndirectOOB = 3;
+  IllegalArithmetic = 4;
+  MisalignedAtomicAccess = 5;
+  IndirectCallToNull = 6;
+  StackOverflow = 7;
+  GenericTrap = 8;
+}
+
+// enum HostError {
+//   BadUTF16 = 0;
+//   BadUTF8 = 1;
+//   GasExceeded = 2;
+//   GasLimitExceeded = 3;
+//   EmptyMethodName = 4;
+//   //GuestPanic
+//   IntegerOverflow = 6;
+//   //InvalidPromiseIndex
+//   CannotAppendActionToJointPromise = 7;
+//   CannotReturnJointPromise = 8;
+//   //InvalidPromiseResultIndex
+//   //InvalidRegisterId
+//   //IteratorWasInvalidated
+//   MemoryAccessViolation = 12;
+//   //InvalidReceiptIndex
+//   //InvalidIteratorIndex
+//   InvalidAccountId = 15;
+//   InvalidMethodName = 16;
+//   InvalidPublicKey = 17;
+//   //ProhibitedInView
+// }
+////////////////
 
 message NewReceiptValidationErrorKind{} //todo: incomplete
 
