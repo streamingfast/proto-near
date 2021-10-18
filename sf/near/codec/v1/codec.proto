@@ -305,7 +305,7 @@ message ActionError {
     TriesToStakeErrorKind tries_to_stake = 31;
     InsufficientStakeErrorKind insufficient_stake = 32;
     FunctionCallErrorKind function_call = 33; //todo: uncompleted
-    NewReceiptValidationErrorKind new_receipt_validation = 34; //todo: uncompleted
+    NewReceiptValidationErrorKind new_receipt_validation = 34;
     OnlyImplicitAccountCreationAllowedErrorKind only_implicit_account_creation_allowed = 35;
     DeleteAccountWithLargeStateErrorKind delete_account_with_large_state = 36;
   }
@@ -372,13 +372,29 @@ message InsufficientStakeErrorKind{
   BigInt minimum_stake = 3;
 }
 
-message FunctionCallErrorKind{
-  oneof function_call_error_ser {
-
-  }
-} //todo: incomplete
-
 ////////////////
+
+message FunctionCallErrorKind {
+  oneof function_call_error_ser {
+    CompilationError compilation_error = 1;
+    LinkError link_error = 2;
+    MethodResolveError method_resolve_error = 3;
+    WasmTrap wasm_trap = 4;
+    WasmUnknownError wasm_unknown_error = 5;
+    HostError host_error = 6;
+    EVMError evm_error = 7;
+    string execution_error = 8;
+  }
+}
+
+
+message LinkError {
+  string msg = 1;
+}
+
+message WasmUnknownError {}
+
+message EVMError {}
 
 message CompilationError {
   oneof kind {
@@ -433,31 +449,211 @@ enum WasmTrap {
   GenericTrap = 8;
 }
 
-// enum HostError {
-//   BadUTF16 = 0;
-//   BadUTF8 = 1;
-//   GasExceeded = 2;
-//   GasLimitExceeded = 3;
-//   EmptyMethodName = 4;
-//   //GuestPanic
-//   IntegerOverflow = 6;
-//   //InvalidPromiseIndex
-//   CannotAppendActionToJointPromise = 7;
-//   CannotReturnJointPromise = 8;
-//   //InvalidPromiseResultIndex
-//   //InvalidRegisterId
-//   //IteratorWasInvalidated
-//   MemoryAccessViolation = 12;
-//   //InvalidReceiptIndex
-//   //InvalidIteratorIndex
-//   InvalidAccountId = 15;
-//   InvalidMethodName = 16;
-//   InvalidPublicKey = 17;
-//   //ProhibitedInView
-// }
+message HostError {
+  oneof kind {
+    BadUTF16 bad_utf16 = 1;
+    BadUTF8 bad_utf8 = 2;
+    GasExceeded gas_exceeded = 3;
+    GasLimitExceeded gas_limit_exceeded = 4;
+    EmptyMethodName empty_method_name = 5;
+    GuestPanic guest_panic = 6;
+    IntegerOverflow integer_overflow = 7;
+    InvalidPromiseIndex invalid_promise_index = 8;
+    CannotAppendActionToJointPromise cannot_append_action_to_joint_promise = 9;
+    CannotReturnJointPromise cannot_return_joint_promise = 10;
+    InvalidPromiseResultIndex invalid_promise_result_index = 11;
+    InvalidRegisterId invalid_register_id = 13;
+    IteratorWasInvalidated iterator_was_invalidated = 14;
+    MemoryAccessViolation memory_access_violation = 15;
+    InvalidReceiptIndex invalid_receipt_index = 16;
+    InvalidIteratorIndex invalid_iterator_index = 17;
+    InvalidAccountIdError invalid_account_id = 18;
+    InvalidMethodName invalid_method_name = 19;
+    InvalidPublicKey invalid_public_key = 20;
+    ProhibitedInView prohibited_in_view = 21;
+    NumberOfLogsExceeded number_of_logs_exceeded = 22;
+    KeyLengthExceeded key_length_exceeded = 23;
+    ValueLengthExceeded value_length_exceeded = 24;
+    TotalLogLengthExceeded total_log_length_exceeded = 25;
+    NumberPromisesExceeded number_promises_exceeded = 26;
+    NumberInputDataDependenciesExceeded number_input_data_dependencies_exceeded = 27;
+    ReturnedValueLengthExceeded returned_value_length_exceeded = 28;
+    ContractSizeExceeded contract_size_exceeded = 29;
+    Deprecated deprecated = 30;
+    ECRecoverError ec_recovered_error = 31;
+    AltBn128DeserializationError alt_bn128_deserialization_error = 32;
+    AltBn128SerializationError alt_bn128_serialization_error = 33;
+  }
+}
+
+message BadUTF16 {}
+message BadUTF8 {}
+message GasExceeded {}
+message GasLimitExceeded {}
+message EmptyMethodName {}
+message GuestPanic {
+  string panic_msg = 1;
+}
+message IntegerOverlow {}
+message InvalidPromiseIndex {
+  uint64 promise_idx = 1;
+}
+message CannotAppendActionToJointPromise {}
+message CannotReturnJointPromise {}
+message InvalidPromiseResultIndex {
+  uint64 result_idx = 1;
+}
+message InvalidRegisterId {
+  uint64 register_id = 1;
+}
+message IteratorWasInvalidated {
+  uint64 iterator_index = 1;
+}
+message MemoryAccessViolation {}
+message InvalidReceiptIndex {
+  uint64 receipt_index = 1;
+}
+message InvalidIteratorIndex {
+  uint64 interator_index = 1;
+}
+message InvalidAccountIdError {}
+message InvalidMethodName {}
+message InvalidPublicKey {}
+message ProhibitedInView {
+  string method_name = 1;
+}
+message NumberOfLogsExceeded {
+  uint64 limit = 1;
+}
+message KeyLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message ValueLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message TotalLogLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message NumberPromisesExceeded {
+  uint64 number_of_promises = 1;
+  uint64 limit = 2;
+}
+message NumberInputDataDependenciesExceeded {
+  uint64 number_of_input_data_dependencies = 1;
+  uint64 limit = 2;
+}
+message ReturnedValueLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message Deprecated {
+  string method_name = 1;
+}
+message ECRecoverError {
+  string msg = 1;
+}
+message AltBn128DeserializationError {
+  string msg = 1;
+}
+message AltBn128SerializationError {
+  string msg = 1;
+}
 ////////////////
 
-message NewReceiptValidationErrorKind{} //todo: incomplete
+message NewReceiptValidationErrorKind{
+  oneof kind {
+    InvalidPredecessorIdError invalid_predecessor_id = 1;
+    InvalidReceiverIdError invalid_receiver_id = 2;
+    InvalidSignerIdError invalid_signer_id = 3;
+    InvalidDataReceiverIdError invalid_data_receiver_id = 4;
+    ReturnedValueLengthExceededError returned_value_length_exceeded = 5;
+    NumberInputDataDependenciesExceededError number_of_input_data_dependencies_exceeded = 6;
+    ActionsValidationErrorKindError actions_validation_error = 7;
+  }
+}
+
+message InvalidPredecessorIdError {
+  string account_id = 1;
+}
+
+message InvalidReceiverIdError {
+  string account_id = 1;
+}
+
+message InvalidSignerIdError {
+  string account_id = 1;
+}
+
+message InvalidDataReceiverIdError {
+  string account_id = 1;
+}
+
+message ReturnedValueLengthExceededError {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+
+message NumberInputDataDependenciesExceededError {
+  uint64 number_of_input_data_dependencies = 1;
+  uint64 limit = 2;
+}
+
+message ActionsValidationErrorKindError {
+  oneof kind {
+    DeleteActionMustBeFinal delete_action_must_be_final = 1;
+    TotalPrepaidGasExceeded total_prepaid_gas_exceeded = 2;
+    TotalNumberOfActionsExceeded total_number_of_actions_exceeded = 3;
+    AddKeyMethodNamesNumberOfBytesExceeded add_key_method_names_number_of_bytes_exceeded = 4;
+    AddKeyMethodNameLengthExceeded add_key_method_name_length_exceeded = 5;
+    IntegerOverflow integer_overflow = 6;
+    InvalidAccountId invalid_account_id = 7;
+    ContractSizeExceeded contract_size_exceeded = 8;
+    FunctionCallMethodNameLengthExceeded function_call_method_name_length_exceeded = 9;
+    FunctionCallArgumentsLengthExceeded function_call_arguments_length_exceeded = 10;
+    UnsuitableStakingKey unsuitable_staking_key = 11;
+    FunctionCallZeroAttachedGas function_call_zero_attached_gas = 12;
+  }
+}
+message DeleteActionMustBeFinal {}
+message TotalPrepaidGasExceeded {
+  uint64 total_prepaid_gas = 1;
+  uint64 limit = 2;
+}
+message TotalNumberOfActionsExceeded {
+  uint64 total_number_of_actions = 1;
+  uint64 limit = 2;
+}
+message AddKeyMethodNamesNumberOfBytesExceeded {
+  uint64 total_number_of_bytes = 1;
+  uint64 limit = 2;
+}
+message AddKeyMethodNameLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message IntegerOverflow {}
+message InvalidAccountId {
+  string account_id = 1;
+}
+message ContractSizeExceeded {
+  uint64 size = 1;
+  uint64 limit = 2;
+}
+message FunctionCallMethodNameLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message FunctionCallArgumentsLengthExceeded {
+  uint64 length = 1;
+  uint64 limit = 2;
+}
+message UnsuitableStakingKey {
+  PublicKey public_key = 1; //TODO: is this correct?
+}
+message FunctionCallZeroAttachedGas {}
 
 message OnlyImplicitAccountCreationAllowedErrorKind{
   string account_id = 1;
