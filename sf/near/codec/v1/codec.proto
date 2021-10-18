@@ -304,8 +304,8 @@ message ActionError {
     TriesToUnstakeErrorKind tries_to_unstake = 30;
     TriesToStakeErrorKind tries_to_stake = 31;
     InsufficientStakeErrorKind insufficient_stake = 32;
-    FunctionCallErrorKind function_call = 33; //todo: uncompleted
-    NewReceiptValidationErrorKind new_receipt_validation = 34; //todo: uncompleted
+    FunctionCallErrorKind function_call = 33;
+    NewReceiptValidationErrorKind new_receipt_validation = 34;
     OnlyImplicitAccountCreationAllowedErrorKind only_implicit_account_creation_allowed = 35;
     DeleteAccountWithLargeStateErrorKind delete_account_with_large_state = 36;
   }
@@ -372,9 +372,34 @@ message InsufficientStakeErrorKind{
   BigInt minimum_stake = 3;
 }
 
-message FunctionCallErrorKind{} //todo: incomplete
+message FunctionCallErrorKind {
+  FunctionCallErrorSer error = 1;
+}
 
-message NewReceiptValidationErrorKind{} //todo: incomplete
+enum FunctionCallErrorSer { //todo: add more detail?
+  CompilationError = 0;
+  LinkError = 1;
+  MethodResolveError = 2;
+  WasmTrap = 3;
+  WasmUnknownError = 4;
+  HostError = 5;
+  _EVMError = 6;
+  ExecutionError = 7;
+}
+
+message NewReceiptValidationErrorKind {
+  ReceiptValidationError error = 1;
+}
+
+enum ReceiptValidationError { //todo: add more detail?
+  InvalidPredecessorId = 0;
+  InvalidReceiverAccountId = 1;
+  InvalidSignerAccountId = 2;
+  InvalidDataReceiverId = 3;
+  ReturnedValueLengthExceeded = 4;
+  NumberInputDataDependenciesExceeded = 5;
+  ActionsValidationError = 6;
+}
 
 message OnlyImplicitAccountCreationAllowedErrorKind{
   string account_id = 1;
@@ -384,7 +409,7 @@ message DeleteAccountWithLargeStateErrorKind{
   string account_id = 1;
 }
 
-enum InvalidTxError {//todo: half baked
+enum InvalidTxError { //todo: add more detail?
   InvalidAccessKeyError = 0;
   InvalidSignerId = 1;
   SignerDoesNotExist = 2;
