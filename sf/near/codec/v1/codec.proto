@@ -304,7 +304,7 @@ message ActionError {
     TriesToUnstakeErrorKind tries_to_unstake = 30;
     TriesToStakeErrorKind tries_to_stake = 31;
     InsufficientStakeErrorKind insufficient_stake = 32;
-    FunctionCallErrorKind function_call = 33; //todo: uncompleted
+    FunctionCallErrorSer function_call_error = 33; //todo: uncompleted
     NewReceiptValidationErrorKind new_receipt_validation = 34;
     OnlyImplicitAccountCreationAllowedErrorKind only_implicit_account_creation_allowed = 35;
     DeleteAccountWithLargeStateErrorKind delete_account_with_large_state = 36;
@@ -374,7 +374,7 @@ message InsufficientStakeErrorKind{
 
 ////////////////
 
-message FunctionCallErrorKind {
+message FunctionCallErrorSer {
   oneof function_call_error_ser {
     CompilationError compilation_error = 1;
     LinkError link_error = 2;
