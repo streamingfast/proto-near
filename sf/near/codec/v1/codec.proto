@@ -186,7 +186,7 @@ message IndexerShard {
 }
 
 message IndexerExecutionOutcomeWithReceipt {
-  ExecutionOutcomeWithIdView execution_outcome = 1;
+  ExecutionOutcomeWithId execution_outcome = 1;
   Receipt receipt = 2;
 }
 
@@ -213,7 +213,7 @@ message SignedTransaction {
 }
 
 message IndexerExecutionOutcomeWithOptionalReceipt {
-  ExecutionOutcomeWithIdView execution_outcome = 1;
+  ExecutionOutcomeWithId execution_outcome = 1;
   Receipt receipt = 2;
 }
 
@@ -247,7 +247,7 @@ message DataReceiver {
   string receiver_id = 2;
 }
 
-message ExecutionOutcomeWithIdView {
+message ExecutionOutcomeWithId {
   MerklePath proof = 1;
   CryptoHash block_hash = 2;
   CryptoHash id = 3;
